@@ -1,4 +1,5 @@
 ﻿using MySpot.Api.Exceptions;
+using MySpot.Api.ValueObjects;
 
 namespace MySpot.Api.Entities;
 
@@ -8,42 +9,40 @@ public class WeeklyParkingSpot
     //nie bedzie sytuacji w ktorej bedziemy mieli zdublowana rezerwacje w ramach kolekcji
     private readonly HashSet<Reservation> _reservations = new();
 
-    public Guid Id { get; }
-    public DateTime From { get; }
-    public DateTime To { get; }
-    public string Name { get; }
+    public ParkingSpotId Id { get; }
+    public Week Week { get; } 
+    public ParkingSpotName Name { get; }
     public IEnumerable<Reservation> Reservations => _reservations;
 
-    public WeeklyParkingSpot(Guid id, DateTime from, DateTime to, string name)
+    public WeeklyParkingSpot(ParkingSpotId id, Week week, ParkingSpotName name)
     { 
         Id = id;
-        From = from;
-        To = to;
+        Week = week; 
         Name = name;
     }
 
-    public void AddResevation(Reservation reservation, DateTime now)
+    public void AddResevation(Reservation reservation, Date now)
     {
-        var isInvalidDate = reservation.Date.Date < From ||
-                            reservation.Date.Date > To ||
-                            reservation.Date.Date < now;
+        var isInvalidDate = reservation.Date < Week.From ||
+                            reservation.Date > Week.To ||
+                            reservation.Date < now;
 
         if (isInvalidDate)
         {
-            throw new InvalidReservatedDateException(reservation.Date); 
+            throw new InvalidReservatedDateException(reservation.Date.Value.Date); 
         }
 
         var reservationAlreadyExists = Reservations.Any(x => 
-            x.Date.Date == reservation.Date.Date);
+            x.Date.Value.Date == reservation.Date.Value.Date);
 
         if (reservationAlreadyExists)
         {
-            throw new ParkingSpotAlreadyReservationException(Name, reservation.Date);
+            throw new ParkingSpotAlreadyReservationException(Name, reservation.Date.Value.Date);
         }
 
         _reservations.Add(reservation);
     }
 
-    public void RemoveReservation(Guid reservationId)
-        => _reservations.RemoveWhere(x => x.Id == reservationId); 
+    public void RemoveReservation(ReservationId id)
+        => _reservations.RemoveWhere(x => x.Id == id); 
 }

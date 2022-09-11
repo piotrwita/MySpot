@@ -6,13 +6,14 @@ namespace MySpot.Api.Services;
 
 public class ReservationsService
 {
+    private static readonly Clock Clock = new();
     private static readonly List<WeeklyParkingSpot> WeeklyParkingSpots = new()
     {
-        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), DateTime.UtcNow, DateTime.UtcNow.AddDays(7), "P1"),
-        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), DateTime.UtcNow, DateTime.UtcNow.AddDays(7), "P2"),
-        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), DateTime.UtcNow, DateTime.UtcNow.AddDays(7), "P3"),
-        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000004"), DateTime.UtcNow, DateTime.UtcNow.AddDays(7), "P4"),
-        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000005"), DateTime.UtcNow, DateTime.UtcNow.AddDays(7), "P5")
+        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), Clock.Current(), Clock.Current().AddDays(7), "P1"),
+        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), Clock.Current(), Clock.Current().AddDays(7), "P2"),
+        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), Clock.Current(), Clock.Current().AddDays(7), "P3"),
+        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000004"), Clock.Current(), Clock.Current().AddDays(7), "P4"),
+        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000005"), Clock.Current(), Clock.Current().AddDays(7), "P5")
     };  
 
     public IEnumerable<ReservationDto> GetAllWeekly() 
@@ -38,7 +39,7 @@ public class ReservationsService
 
         var reservation = new Reservation(command.ReservationId, command.ParkingSpotId,
             command.EmployeeName, command.LicensePlate, command.Date);
-        weeklyParkingSpot.AddResevation(reservation);
+        weeklyParkingSpot.AddResevation(reservation, Clock.Current());
 
         return reservation.Id;
     }
@@ -58,7 +59,7 @@ public class ReservationsService
         }
 
 
-        if (existingReservation.Date <= DateTime.UtcNow)
+        if (existingReservation.Date <= Clock.Current())
         {
             return false;
         }

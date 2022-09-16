@@ -3,7 +3,7 @@ using MySpot.Core.Entities;
 using MySpot.Core.Repositiories;
 using MySpot.Core.ValueObjects;
 
-namespace MySpot.Infrastructure.Repositiories;
+namespace MySpot.Infrastructure.DAL.Repositiories;
 
 internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepository
 {

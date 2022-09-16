@@ -3,7 +3,7 @@ using MySpot.Core.Entities;
 
 namespace MySpot.Infrastructure.DAL;
 
-public sealed class MySpotDbContext : DbContext
+internal sealed class MySpotDbContext : DbContext
 {
     //odwzorowanie encji/klas c# na tabele trzymane po stronie bazy danych
     public DbSet<Reservation> Reservations { get; set; }

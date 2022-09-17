@@ -18,12 +18,13 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<ReservationDto>> Get() => Ok(_reservationsService.GetAllWeekly());
+    public async Task<ActionResult<IEnumerable<ReservationDto>>> Get() 
+        => Ok(await _reservationsService.GetAllWeeklyAsync());
 
     [HttpGet("{id:guid}")]
-    public ActionResult<ReservationDto> Get(Guid id)
+    public async Task<ActionResult<ReservationDto>> Get(Guid id)
     {
-        var reservation = _reservationsService.Get(id);
+        var reservation = await _reservationsService.GetAsync(id);
         if (reservation is null)
         {
             return NotFound();
@@ -33,9 +34,9 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post(CreateReservation command)
+    public async Task<ActionResult> Post(CreateReservation command)
     {
-        var id = _reservationsService.Create(command with { ReservationId = Guid.NewGuid() });
+        var id = await _reservationsService.CreateAsync(command with { ReservationId = Guid.NewGuid() });
 
         if (id is null)
         {
@@ -46,9 +47,9 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public ActionResult Put(Guid id, ChangeReservationLicensePlate command)
+    public async Task<ActionResult> Put(Guid id, ChangeReservationLicensePlate command)
     {
-        if (_reservationsService.Update(command with { ReservationId = id }))
+        if (await _reservationsService.UpdateAsync(command with { ReservationId = id }))
         {
             return NoContent();
         }
@@ -57,9 +58,9 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public ActionResult Delete(Guid id)
+    public async Task<ActionResult> Delete(Guid id)
     {
-        if (_reservationsService.Delete(new DeleteReservation(id)))
+        if (await _reservationsService.DeleteAsync(new DeleteReservation(id)))
         {
             return NoContent();
         }

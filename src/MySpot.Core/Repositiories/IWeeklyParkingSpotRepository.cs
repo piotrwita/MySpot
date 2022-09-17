@@ -9,9 +9,9 @@ namespace MySpot.Core.Repositiories;
 //jak dane pobrac zapisac usunac itd
 public interface IWeeklyParkingSpotRepository
 {
-    WeeklyParkingSpot Get(ParkingSpotId id);
-    IEnumerable<WeeklyParkingSpot> GetAll();
-    void Add(WeeklyParkingSpot weeklyParkingSpot);
-    void Update(WeeklyParkingSpot weeklyParkingSpot);
-    void Delete(WeeklyParkingSpot weeklyParkingSpot);
+    Task<WeeklyParkingSpot> GetAsync(ParkingSpotId id);
+    Task<IEnumerable<WeeklyParkingSpot>> GetAllAsync();
+    Task AddAsync(WeeklyParkingSpot weeklyParkingSpot);
+    Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot);
+    Task DeleteAsync(WeeklyParkingSpot weeklyParkingSpot);
 }

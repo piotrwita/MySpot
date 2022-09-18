@@ -1,6 +1,6 @@
 ﻿namespace MySpot.Core.Exceptions;
 
-public class ParkingSpotAlreadyReservationException : CustomException
+public sealed class ParkingSpotAlreadyReservationException : CustomException
 {
     public string Name { get; }
     public DateTime Date { get; }

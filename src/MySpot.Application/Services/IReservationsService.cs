@@ -1,5 +1,6 @@
 ﻿using MySpot.Application.Commands;
 using MySpot.Application.DTO;
+using MySpot.Core.ValueObjects;
 
 namespace MySpot.Application.Services;
 

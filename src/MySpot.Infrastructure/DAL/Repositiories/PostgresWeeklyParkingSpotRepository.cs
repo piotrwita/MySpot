@@ -20,6 +20,12 @@ internal class PostgresWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
             .Include(x => x.Reservations)
             .SingleOrDefaultAsync(x => x.Id == id);
 
+    public async Task<IEnumerable<WeeklyParkingSpot>> GetByWeekAsync(Week week)
+        => await _dbContext.WeeklyParkingSpots
+            .Include(x => x.Reservations)
+            .Where(x => x.Week == week)
+            .ToListAsync();
+
     public async Task<IEnumerable<WeeklyParkingSpot>> GetAllAsync()
         => await _dbContext.WeeklyParkingSpots
             .Include(x => x.Reservations)

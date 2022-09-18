@@ -1,6 +1,6 @@
 ﻿namespace MySpot.Core.Exceptions;
 
-public class InvalidReservationDateException : CustomException
+public sealed class InvalidReservationDateException : CustomException
 {
     public DateTime Date { get; }
 

@@ -16,7 +16,7 @@ public class WeeklyParkingSpotTests
     {
         // ARRANGE 
         var invalidDate = new Date(DateTime.Parse(dateString));
-        var reservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", invalidDate);
+        var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", invalidDate);
 
         // ACT
         //sprawdzam czy dostane błąd - taki jest cel testu
@@ -32,8 +32,8 @@ public class WeeklyParkingSpotTests
     {
         // ARRANGE
         var reservationDate = _now.AddDays(1);
-        var reservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", reservationDate);
-        var nextReservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", reservationDate);
+        var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", reservationDate);
+        var nextReservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", reservationDate);
         _weeklyParkingSpot.AddResevation(reservation, _now);
 
         // ACT
@@ -50,7 +50,7 @@ public class WeeklyParkingSpotTests
     {
         // ARRANGE
         var reservationDate = _now.AddDays(1);
-        var reservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", reservationDate);
+        var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "Joe Doe", "XYZ123", reservationDate);
 
         // ACT 
         _weeklyParkingSpot.AddResevation(reservation, _now);

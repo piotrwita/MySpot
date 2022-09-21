@@ -33,10 +33,10 @@ public class ReservationsController : ControllerBase
         return Ok(reservation);
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Post(CreateReservation command)
+    [HttpPost("vehicle")]
+    public async Task<ActionResult> Post(ReserveParkingSpotForVehicle command)
     {
-        var id = await _reservationsService.CreateAsync(command with { ReservationId = Guid.NewGuid() });
+        var id = await _reservationsService.ReserveForVehicleAsync(command with { ReservationId = Guid.NewGuid() });
 
         if (id is null)
         {
@@ -46,10 +46,17 @@ public class ReservationsController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id }, null);
     }
 
+    [HttpPost("cleaning")]
+    public async Task<ActionResult> Post(ReserveParkingSpotForCleaning command)
+    {
+        await _reservationsService.ReserveForCleaningAsync(command);    
+        return Ok();
+    }
+
     [HttpPut("{id:guid}")]
     public async Task<ActionResult> Put(Guid id, ChangeReservationLicensePlate command)
     {
-        if (await _reservationsService.UpdateAsync(command with { ReservationId = id }))
+        if (await _reservationsService.ChangeReservationLicensePlateAsync(command with { ReservationId = id }))
         {
             return NoContent();
         }

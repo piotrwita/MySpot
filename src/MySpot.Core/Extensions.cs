@@ -12,7 +12,7 @@ public static class Extensions
             .AddSingleton<IReservationPolicy, RegularEmployeeReservationPolicy>()
             .AddSingleton<IReservationPolicy, ManagerReservationPolicy>()
             .AddSingleton<IReservationPolicy, BossReservationPolicy>()
-            .AddSingleton<IParkingReservationService, IParkingReservationService>();
+            .AddSingleton<IParkingReservationService, ParkingReservationService>();
 
         return services;
     }

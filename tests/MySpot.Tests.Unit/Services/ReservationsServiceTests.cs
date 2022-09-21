@@ -1,6 +1,9 @@
 ﻿using MySpot.Application.Commands;
 using MySpot.Application.Services;
+using MySpot.Core.Abstractions;
+using MySpot.Core.Policies;
 using MySpot.Core.Repositiories;
+using MySpot.Core.Services;
 using MySpot.Infrastructure.DAL.Repositiories;
 using MySpot.Tests.Unit.Shared;
 using Shouldly;
@@ -18,11 +21,11 @@ public class ReservationsServiceTests
     {
         // ARRANGE
         var weeklyParkingSpot = (await _weeklyParkingSpotRepository.GetAllAsync()).First();
-        var command = new CreateReservation(weeklyParkingSpot.Id, Guid.NewGuid(),
+        var command = new ReserveParkingSpotForVehicle(weeklyParkingSpot.Id, Guid.NewGuid(),
             _clock.Current().AddMinutes(5), "John Doe", "XYZ123");
 
         // ACT
-        var reservationId = await _reservationsService.CreateAsync(command);
+        var reservationId = await _reservationsService.ReserveForVehicleAsync(command);
 
         // ASSERT
         reservationId.ShouldNotBeNull();
@@ -39,7 +42,15 @@ public class ReservationsServiceTests
     {
         _clock = new TestClock();
         _weeklyParkingSpotRepository = new InMemoryWeeklyParkingSpotRepository(_clock);
-        _reservationsService = new ReservationsService(_clock, _weeklyParkingSpotRepository);
+
+        var parkingReservationService = new ParkingReservationService(new IReservationPolicy[]
+        {
+            new BossReservationPolicy(),
+            new ManagerReservationPolicy(),
+            new RegularEmployeeReservationPolicy(_clock)
+        }, _clock);
+
+        _reservationsService = new ReservationsService(_clock, _weeklyParkingSpotRepository, parkingReservationService);
     }
 
     #endregion

@@ -21,7 +21,7 @@ public class ReservationsServiceTests
     {
         // ARRANGE
         var weeklyParkingSpot = (await _weeklyParkingSpotRepository.GetAllAsync()).First();
-        var command = new ReserveParkingSpotForVehicle(weeklyParkingSpot.Id, Guid.NewGuid(),
+        var command = new ReserveParkingSpotForVehicle(weeklyParkingSpot.Id, Guid.NewGuid(), 1,
             _clock.Current().AddMinutes(5), "John Doe", "XYZ123");
 
         // ACT

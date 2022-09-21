@@ -56,7 +56,7 @@ public class ReservationsService : IReservationsService
         }
 
         var reservation = new VehicleReservation(command.ReservationId, command.ParkingSpotId,
-            command.EmployeeName, command.LicensePlate, new Date(command.Date));
+            command.EmployeeName, command.LicensePlate, command.Capacity, new Date(command.Date));
 
         _parkingReservationService.ReserveSpotForVehicle(weeklyParkingSpots, JobTitle.Employee,
             parkingSpotToReserve, reservation);
@@ -71,10 +71,7 @@ public class ReservationsService : IReservationsService
         var weeklyParkingSpots = await _weeklyParkingSpotRepository.GetByWeekAsync(week);
 
         _parkingReservationService.ReserveParkingForCleaning(weeklyParkingSpots, new Date(command.Date));
-
-        //var task = weeklyParkingSpots.Select(x => _weeklyParkingSpotRepository.UpdateAsync(x));
-        //await Task.WhenAll(task);
-
+         
         foreach(var parkingSpot in weeklyParkingSpots)
         {
             await _weeklyParkingSpotRepository.UpdateAsync(parkingSpot);

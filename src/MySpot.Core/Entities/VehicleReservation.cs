@@ -8,7 +8,8 @@ public sealed class VehicleReservation : Reservation
     public LicensePlate LicensePlate { get; private set; }
 
     public VehicleReservation(ReservationId id, ParkingSpotId parkingSpotId, EmployeeName employeeName, 
-        LicensePlate licensePlate, Date date) : base(id, parkingSpotId, date)
+        LicensePlate licensePlate, Capacity capacity, Date date) 
+        : base(id, parkingSpotId, capacity, date)
     { 
         EmployeeName = employeeName;
         ChangeLicensePlate(licensePlate); 

@@ -38,15 +38,15 @@ internal class PostgresWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
         await _dbContext.SaveChangesAsync(); 
     }
 
-    public async Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot)
+    public Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot)
     {
         _dbContext.Update(weeklyParkingSpot);
-        await _dbContext.SaveChangesAsync(); 
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(WeeklyParkingSpot weeklyParkingSpot)
+    public Task DeleteAsync(WeeklyParkingSpot weeklyParkingSpot)
     {
         _dbContext.Remove(weeklyParkingSpot);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 }

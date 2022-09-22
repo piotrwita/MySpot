@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySpot.Application.Abstractions;
+using MySpot.Application.Commands;
 using MySpot.Core.Repositiories;
+using MySpot.Infrastructure.DAL.Decorators;
 using MySpot.Infrastructure.DAL.Repositiories;
 
 namespace MySpot.Infrastructure.DAL;
@@ -21,6 +24,11 @@ internal static class Extension
             //parametry polaczenia z silnikiem bazy danych
             .AddDbContext<MySpotDbContext>(x => x.UseNpgsql(options.ConnectionString))
             .AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>()
+            .AddScoped<IUnitOfWork, PostgressUnitOfWork>()
+            //globalnie
+            .Decorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>))
+            .Decorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>))
+            //.Decorate<ICommandHandler<ReserveParkingSpotForCleaning>, UnitOfWorkCommandHandlerDecorator>()
             .AddHostedService<DatabaseInitializer>();
 
         //Npgsql obsługuje również odczytywanie i zapisywanie DateTimeOffset do znacznika czasu ze strefą czasową, ale tylko z przesunięciem=0

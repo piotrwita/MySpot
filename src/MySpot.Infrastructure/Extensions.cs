@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySpot.Application.Abstractions;
 using MySpot.Core.Abstractions;
 using MySpot.Infrastructure.DAL;
 using MySpot.Infrastructure.Exceptions;
@@ -17,6 +18,14 @@ public static class Extensions
             .AddSingleton<IClock, Clock>()
             .AddSingleton<ExceptionMiddleware>();
         //.AddSingleton<IWeeklyParkingSpotRepository, InMemoryWeeklyParkingSpotRepository>();
+
+        var infrastructureAssembly = typeof(Clock).Assembly;
+
+        //przekanuj wskazane assembly
+        services.Scan(s => s.FromAssemblies(infrastructureAssembly) 
+            .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>))) 
+            .AsImplementedInterfaces() 
+            .WithScopedLifetime());
 
         return services;
     }

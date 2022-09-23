@@ -6,6 +6,7 @@ using MySpot.Application.Commands;
 using MySpot.Core.Repositiories;
 using MySpot.Infrastructure.DAL.Decorators;
 using MySpot.Infrastructure.DAL.Repositiories;
+using MySpot.Infrastructure.Logging.Decorators;
 
 namespace MySpot.Infrastructure.DAL;
 

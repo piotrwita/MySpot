@@ -25,6 +25,7 @@ internal static class Extension
             //parametry polaczenia z silnikiem bazy danych
             .AddDbContext<MySpotDbContext>(x => x.UseNpgsql(options.ConnectionString))
             .AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>()
+            .AddScoped<IUserRepository, PostgresUserRepository>()
             .AddScoped<IUnitOfWork, PostgressUnitOfWork>()
             //globalnie
             .Decorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>))

@@ -35,3 +35,4 @@ internal class DeleteReservationHandler : ICommandHandler<DeleteReservation>
             .SingleOrDefault(x => x.Reservations.Any(r => r.Id == reservationId));
     }
 }
+    

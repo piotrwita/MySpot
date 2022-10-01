@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Abstractions;
 using MySpot.Core.Abstractions;
+using MySpot.Infrastructure.Auth;
 using MySpot.Infrastructure.DAL;
 using MySpot.Infrastructure.Exceptions;
 using MySpot.Infrastructure.Logging;
@@ -22,7 +23,9 @@ public static class Extensions
             .AddPostgres(configuration)
             .AddSingleton<IClock, Clock>()
             .AddSingleton<ExceptionMiddleware>()
-            .AddSecurity();
+            .AddSecurity()
+            .AddAuth(configuration)
+            .AddHttpContextAccessor();
         //.AddSingleton<IWeeklyParkingSpotRepository, InMemoryWeeklyParkingSpotRepository>();
 
         var infrastructureAssembly = typeof(Clock).Assembly;
@@ -42,6 +45,8 @@ public static class Extensions
     public static WebApplication UseInfrastucture(this WebApplication app)
     {
         app.UseMiddleware<ExceptionMiddleware>();
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.MapControllers();
 
         return app;

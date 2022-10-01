@@ -45,4 +45,3 @@ internal class SignUpHandler : ICommandHandler<SignUp>
         await _userRepository.AddAsync(user);
     }
 }
-    

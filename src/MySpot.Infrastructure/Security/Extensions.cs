@@ -5,7 +5,7 @@ using MySpot.Core.Entities;
 
 namespace MySpot.Infrastructure.Security;
 
-public static class Extensions
+internal static class Extensions
 {
     internal static IServiceCollection AddSecurity(this IServiceCollection services)
     {

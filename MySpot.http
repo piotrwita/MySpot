@@ -3,6 +3,29 @@
 
 @parkingSpotId = 00000000-0000-0000-0000-000000000001
 
+@userId = 5cbc290d-a226-40ef-a76e-a298514c31d8
+
+###
+GET {{url}}
+
+###
+GET {{url}}/users 
+
+###
+GET {{url}}/users/{{userId}}
+
+###
+POST {{url}}/users
+Content-Type: application/json
+
+{ 
+    "email": "user1@myspot.io",
+    "username": "user1",
+    "password": "secret",
+    "fullName": "Joe Node",
+    "role": "user"
+} 
+
 ###
 GET {{url}}/parking-spots
  

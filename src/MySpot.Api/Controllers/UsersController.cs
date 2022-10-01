@@ -44,7 +44,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("me")]
-    [Authorize] //zeby mechanizm uwierzytelniania byl wpiety (musi uzytkownik wyslac token do tej operacji)
+    [Authorize(Policy = "is -admin")] //zeby mechanizm uwierzytelniania byl wpiety (musi uzytkownik wyslac token do tej operacji)
     public async Task<ActionResult<UserDto>> Get()
     {
         if(string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))

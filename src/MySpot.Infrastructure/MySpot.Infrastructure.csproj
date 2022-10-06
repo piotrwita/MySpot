@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="MySpot.Tests.Unit" />
-  </ItemGroup>
-
+    <InternalsVisibleTo Include="MySpot.Tests.Integration" />
+  </ItemGroup> 
+  
 </Project>

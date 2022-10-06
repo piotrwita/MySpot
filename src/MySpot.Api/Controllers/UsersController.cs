@@ -52,7 +52,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("me")]
-    [Authorize(Policy = "is -admin")] //zeby mechanizm uwierzytelniania byl wpiety (musi uzytkownik wyslac token do tej operacji)
+    [Authorize(Policy = "is-admin")] //zeby mechanizm uwierzytelniania byl wpiety (musi uzytkownik wyslac token do tej operacji)
     public async Task<ActionResult<UserDto>> Get()
     {
         if(string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))
@@ -79,7 +79,7 @@ public class UsersController : ControllerBase
     {
         command = command with { UserId = Guid.NewGuid() };
         await _signUpHandler.HandleAsync(command);
-        return NoContent();
+        return CreatedAtAction(nameof(Get), new { command.UserId }, null);
     }
 
     [HttpPost("sign-in")]

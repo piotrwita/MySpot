@@ -3,10 +3,13 @@
 
 @parkingSpotId = 00000000-0000-0000-0000-000000000001
 
-@userId = 5cbc290d-a226-40ef-a76e-a298514c31d8
+@userId = 4d83e393-f248-4daf-9b6d-d3c6dad40923
 
 ###
 GET {{url}}
+
+###
+GET {{url}}/api
 
 ###
 GET {{url}}/users 
@@ -15,16 +18,52 @@ GET {{url}}/users
 GET {{url}}/users/{{userId}}
 
 ###
-POST {{url}}/users
+GET {{url}}/api/users/{{userId}}
+
+###
+POST {{url}}/api/users
 Content-Type: application/json
 
 { 
-    "email": "user1@myspot.io",
-    "username": "user1",
+    "email": "user2@myspot.io",
+    "username": "user2",
     "password": "secret",
     "fullName": "Joe Node",
     "role": "user"
 } 
+
+###
+POST {{url}}/users
+Content-Type: application/json
+
+{ 
+    "email": "user2@myspot.io",
+    "username": "user2",
+    "password": "secret",
+    "fullName": "Joe Node",
+    "role": "user"
+} 
+
+###
+# @name sign_in
+POST {{url}}/users/sign-in
+Content-Type: application/json
+
+{ 
+    "email": "user1@myspot.io",
+    "password": "secret"
+} 
+
+###
+@accessToken = {{sign_in.response.body.$.accessToken}}
+
+###
+GET {{url}}/users/me
+Authorization: Bearer {{accessToken}}
+
+###
+GET {{url}}/api/users/me
+Authorization: Bearer {{accessToken}}
 
 ###
 GET {{url}}/parking-spots

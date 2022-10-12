@@ -1,0 +1,16 @@
+﻿migracja:
+dotnet to
+ol install --global dotnet-ef
+dotnet ef
+dotnet ef migrations
+cd src/Infrastructure
+dotnet ef migrations add Init -o ./DAL/Migrations --startup-project ../MySpot.Api --o ./DAL/Migrations wskazanie katalogu w jakim ma byc stworzona migracja
+
+dotnet ef database 
+dotnet ef database update
+
+dotnet ef migrations add Cleaning_Reservation --startup-project ../MySpot.Api/MySpot.Api.csproj --context MySpotDbContext -o ./DAL/Migrations
+dotnet ef migrations add Introducing_Capacity --startup-project ../MySpot.Api/MySpot.Api.csproj --context MySpotDbContext -o ./DAL/Migrations
+dotnet ef migrations add User --startup-project ../MySpot.Api/MySpot.Api.csproj --context MySpotDbContext -o ./DAL/Migrations
+ 
+dotnet ef migrations add User -o ./DAL/Migrations --startup-project ../MySpot.Api/MySpot.Api.csproj --context MySpotDbContext 

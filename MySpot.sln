@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Application", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Infrastructure", "src\MySpot.Infrastructure\MySpot.Infrastructure.csproj", "{A15A65B2-915F-4ABE-B014-A31D2286C000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Tests.Integration", "MySpot.Tests.Integration\MySpot.Tests.Integration.csproj", "{8B960011-AA4F-4361-AB9C-D4312D5F471E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Tests.Integration", "tests\MySpot.Tests.Integration\MySpot.Tests.Integration.csproj", "{8B960011-AA4F-4361-AB9C-D4312D5F471E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
